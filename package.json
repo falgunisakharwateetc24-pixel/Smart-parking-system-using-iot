@@ -1,0 +1,31 @@
+{
+  "name": "smart-parking-system",
+  "version": "1.0.0",
+  "description": "IoT Smart Parking System with NodeMCU ESP8266, Node.js, Express, SQLite, and Real-Time Purple Dashboard",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js",
+    "postinstall": "node -e \"if (process.platform === 'linux') { try { console.log('Compiling sqlite3 from source for Linux/Render...'); require('child_process').execSync('npm rebuild sqlite3 --build-from-source', { stdio: 'inherit' }); } catch(e) { console.warn('Native rebuild warning:', e.message); } }\""
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "keywords": [
+    "iot",
+    "esp8266",
+    "smart-parking",
+    "express",
+    "sqlite",
+    "render"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "bcryptjs": "^3.0.3",
+    "cors": "^2.8.5",
+    "express": "^4.21.2",
+    "jsonwebtoken": "^9.0.2",
+    "sqlite3": "^6.0.1"
+  }
+}

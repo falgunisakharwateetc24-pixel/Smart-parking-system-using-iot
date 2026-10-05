@@ -1,0 +1,289 @@
+/* 
+ * Smart Parking System - Modern Purple Theme Stylesheet
+ * Supports Light Mode & Dark Mode, Purple Gradients, Glassmorphism, 
+ * Distinct Status Indicators (Green/Yellow/Red), and Smooth Micro-Animations.
+ */
+
+:root {
+  --primary-purple: #7C3AED;
+  --dark-purple: #4C1D95;
+  --light-purple: #A78BFA;
+  --soft-purple: #C4B5FD;
+  --ultra-light-purple: #EDE9FE;
+
+  /* Light Mode Defaults */
+  --bg-main: #F5F3FF;
+  --bg-card: rgba(255, 255, 255, 0.92);
+  --bg-card-hover: rgba(255, 255, 255, 0.98);
+  --border-card: rgba(167, 139, 250, 0.3);
+  --text-main: #1E1B4B;
+  --text-muted: #6B7280;
+  --nav-bg: rgba(255, 255, 255, 0.85);
+
+  /* Status Colors */
+  --status-available: #10B981;
+  --status-available-bg: rgba(16, 185, 129, 0.12);
+  --status-available-border: rgba(16, 185, 129, 0.4);
+
+  --status-reserved: #F59E0B;
+  --status-reserved-bg: rgba(245, 158, 11, 0.12);
+  --status-reserved-border: rgba(245, 158, 11, 0.4);
+
+  --status-occupied: #EF4444;
+  --status-occupied-bg: rgba(239, 68, 68, 0.12);
+  --status-occupied-border: rgba(239, 68, 68, 0.4);
+
+  --shadow-purple: 0 10px 25px -5px rgba(124, 58, 237, 0.2), 0 8px 10px -6px rgba(124, 58, 237, 0.1);
+  --shadow-card: 0 4px 20px -2px rgba(76, 29, 149, 0.08);
+}
+
+/* Dark Mode Variables */
+[data-theme="dark"] {
+  --bg-main: #0B0817;
+  --bg-card: rgba(24, 15, 48, 0.85);
+  --bg-card-hover: rgba(36, 21, 74, 0.95);
+  --border-card: rgba(139, 92, 246, 0.25);
+  --text-main: #F3F4F6;
+  --text-muted: #9CA3AF;
+  --nav-bg: rgba(15, 10, 31, 0.88);
+
+  --status-available-bg: rgba(16, 185, 129, 0.2);
+  --status-reserved-bg: rgba(245, 158, 11, 0.2);
+  --status-occupied-bg: rgba(239, 68, 68, 0.2);
+
+  --shadow-purple: 0 10px 30px -5px rgba(124, 58, 237, 0.4);
+  --shadow-card: 0 4px 25px -2px rgba(0, 0, 0, 0.45);
+}
+
+/* Base Body */
+body {
+  background-color: var(--bg-main);
+  color: var(--text-main);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  min-height: 100vh;
+}
+
+/* Purple Gradients */
+.gradient-purple-hero {
+  background: linear-gradient(135deg, #7C3AED 0%, #5B21B6 50%, #3B0764 100%);
+}
+
+.gradient-purple-card {
+  background: linear-gradient(135deg, rgba(124, 58, 237, 0.9) 0%, rgba(91, 33, 182, 0.95) 100%);
+}
+
+.gradient-purple-btn {
+  background: linear-gradient(135deg, #8B5CF6 0%, #7C3AED 60%, #6D28D9 100%);
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.gradient-purple-btn:hover {
+  background: linear-gradient(135deg, #9061F9 0%, #8340F4 60%, #7E22CE 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px -4px rgba(124, 58, 237, 0.5);
+}
+
+.gradient-purple-btn:active {
+  transform: translateY(0);
+}
+
+/* Glassmorphism Card Base */
+.glass-card {
+  background-color: var(--bg-card);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid var(--border-card);
+  box-shadow: var(--shadow-card);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.glass-card:hover {
+  box-shadow: var(--shadow-purple);
+  transform: translateY(-2px);
+}
+
+/* KPI Cards */
+.kpi-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: 1.25rem;
+}
+
+.kpi-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: linear-gradient(90deg, #A78BFA, #7C3AED, #4C1D95);
+}
+
+/* Status Indicators */
+.badge-available {
+  background-color: var(--status-available-bg);
+  color: var(--status-available);
+  border: 1px solid var(--status-available-border);
+}
+
+.badge-reserved {
+  background-color: var(--status-reserved-bg);
+  color: var(--status-reserved);
+  border: 1px solid var(--status-reserved-border);
+}
+
+.badge-occupied {
+  background-color: var(--status-occupied-bg);
+  color: var(--status-occupied);
+  border: 1px solid var(--status-occupied-border);
+}
+
+/* Pulse Animations for Live Indicators */
+@keyframes pulse-ring-green {
+  0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+  70% { transform: scale(1); box-shadow: 0 0 0 8px rgba(16, 185, 129, 0); }
+  100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+}
+
+@keyframes pulse-ring-red {
+  0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); }
+  70% { transform: scale(1); box-shadow: 0 0 0 8px rgba(239, 68, 68, 0); }
+  100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+}
+
+@keyframes pulse-ring-yellow {
+  0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.7); }
+  70% { transform: scale(1); box-shadow: 0 0 0 8px rgba(245, 158, 11, 0); }
+  100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(245, 158, 11, 0); }
+}
+
+.pulse-green {
+  animation: pulse-ring-green 2s infinite;
+}
+
+.pulse-red {
+  animation: pulse-ring-red 2s infinite;
+}
+
+.pulse-yellow {
+  animation: pulse-ring-yellow 2s infinite;
+}
+
+/* Parking Bay Road Styling */
+.parking-lot-road {
+  background: repeating-linear-gradient(
+    90deg,
+    rgba(124, 58, 237, 0.05),
+    rgba(124, 58, 237, 0.05) 30px,
+    transparent 30px,
+    transparent 60px
+  );
+  border-radius: 1.5rem;
+}
+
+.parking-bay {
+  position: relative;
+  border: 2px dashed rgba(167, 139, 250, 0.4);
+  border-radius: 1.25rem;
+  transition: all 0.3s ease;
+}
+
+.parking-bay.bay-available {
+  border-color: rgba(16, 185, 129, 0.5);
+  box-shadow: inset 0 0 25px rgba(16, 185, 129, 0.06);
+}
+
+.parking-bay.bay-reserved {
+  border-color: rgba(245, 158, 11, 0.5);
+  box-shadow: inset 0 0 25px rgba(245, 158, 11, 0.08);
+}
+
+.parking-bay.bay-occupied {
+  border-color: rgba(239, 68, 68, 0.5);
+  box-shadow: inset 0 0 25px rgba(239, 68, 68, 0.08);
+}
+
+/* Active Navigation Tabs */
+.nav-tab-btn {
+  color: var(--text-muted);
+  border-bottom: 3px solid transparent;
+  transition: all 0.2s ease;
+}
+
+.nav-tab-btn.active {
+  color: var(--primary-purple);
+  border-bottom-color: var(--primary-purple);
+  font-weight: 600;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-main);
+}
+
+::-webkit-scrollbar-thumb {
+  background: #C4B5FD;
+  border-radius: 4px;
+}
+
+[data-theme="dark"] ::-webkit-scrollbar-thumb {
+  background: #5B21B6;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #7C3AED;
+}
+
+/* Toast Notifications */
+#toast-container {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  pointer-events: none;
+}
+
+.toast {
+  pointer-events: auto;
+  min-width: 300px;
+  max-width: 420px;
+  padding: 1rem 1.25rem;
+  border-radius: 1rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  animation: slideInToast 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  backdrop-filter: blur(16px);
+  color: #FFFFFF;
+}
+
+@keyframes slideInToast {
+  from { opacity: 0; transform: translateY(20px) scale(0.95); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.toast-success {
+  background: linear-gradient(135deg, #059669 0%, #10B981 100%);
+}
+
+.toast-error {
+  background: linear-gradient(135deg, #DC2626 0%, #EF4444 100%);
+}
+
+.toast-warning {
+  background: linear-gradient(135deg, #D97706 0%, #F59E0B 100%);
+}
+
+.toast-info {
+  background: linear-gradient(135deg, #6D28D9 0%, #7C3AED 100%);
+}

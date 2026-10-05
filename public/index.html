@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login - Smart Parking System</title>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Custom Purple Theme Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+  <script>
+    tailwind.config = {
+      darkMode: ['selector', '[data-theme="dark"]'],
+      theme: {
+        extend: {
+          colors: {
+            purple: {
+              50: '#F5F3FF',
+              100: '#EDE9FE',
+              200: '#DDD6FE',
+              300: '#C4B5FD',
+              400: '#A78BFA',
+              500: '#8B5CF6',
+              600: '#7C3AED',
+              700: '#6D28D9',
+              800: '#5B21B6',
+              900: '#4C1D95',
+            }
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="flex flex-col min-h-screen">
+  <!-- Top Background Ambient Glows -->
+  <div class="fixed top-0 left-1/4 w-96 h-96 bg-purple-500/15 rounded-full blur-3xl pointer-events-none -z-10"></div>
+  <div class="fixed bottom-0 right-1/4 w-96 h-96 bg-purple-700/15 rounded-full blur-3xl pointer-events-none -z-10"></div>
+
+  <!-- Header / Navigation Bar -->
+  <header class="w-full glass-card border-b py-4 px-6 sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto flex items-center justify-between">
+      <div class="flex items-center space-x-3">
+        <div class="w-10 h-10 rounded-xl gradient-purple-btn flex items-center justify-center text-white text-xl shadow-md">
+          🚗
+        </div>
+        <div>
+          <span class="text-xl font-extrabold tracking-tight bg-gradient-to-r from-purple-700 via-purple-600 to-indigo-600 bg-clip-text text-transparent dark:from-purple-300 dark:to-indigo-300">
+            SMART PARKING SYSTEM
+          </span>
+          <span class="hidden sm:inline-block ml-2 text-xs px-2 py-0.5 rounded-full bg-purple-100 text-purple-700 font-semibold dark:bg-purple-900/50 dark:text-purple-300">
+            IoT Cloud
+          </span>
+        </div>
+      </div>
+
+      <!-- Theme Switcher -->
+      <button id="theme-toggle" class="p-2.5 rounded-xl border border-purple-200 dark:border-purple-800 hover:bg-purple-100 dark:hover:bg-purple-900/40 text-purple-700 dark:text-purple-300 transition-colors" title="Toggle Light / Dark Mode">
+        <span id="theme-icon">🌙</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Main Content Container -->
+  <main class="flex-1 flex items-center justify-center p-4 sm:p-6 lg:p-8">
+    <div class="w-full max-w-md">
+      <!-- Main Auth Card -->
+      <div class="glass-card rounded-3xl p-6 sm:p-8 shadow-2xl relative overflow-hidden border border-purple-200/60 dark:border-purple-800/60">
+        <!-- Purple Top Accent Strip -->
+        <div class="absolute top-0 left-0 right-0 h-2 bg-gradient-to-r from-purple-500 via-purple-600 to-indigo-600"></div>
+
+        <div class="text-center mb-6 pt-2">
+          <div class="inline-flex p-3 rounded-2xl bg-purple-100 dark:bg-purple-900/40 text-purple-600 dark:text-purple-300 text-3xl mb-3 shadow-inner">
+            🅿️
+          </div>
+          <h1 class="text-2xl sm:text-3xl font-bold tracking-tight text-gray-900 dark:text-white" id="form-title">
+            Welcome Back
+          </h1>
+          <p class="text-sm text-gray-500 dark:text-gray-400 mt-1" id="form-subtitle">
+            Sign in to access real-time IoT smart parking slots
+          </p>
+        </div>
+
+        <!-- Tab Switcher (Login vs Register) -->
+        <div class="flex p-1 bg-purple-100/70 dark:bg-purple-950/60 rounded-2xl mb-6">
+          <button id="tab-login-btn" class="flex-1 py-2.5 text-sm font-semibold rounded-xl transition-all shadow-sm bg-white dark:bg-purple-800 text-purple-700 dark:text-white">
+            Sign In
+          </button>
+          <button id="tab-register-btn" class="flex-1 py-2.5 text-sm font-medium rounded-xl transition-all text-gray-600 dark:text-gray-300 hover:text-purple-700 dark:hover:text-white">
+            Register
+          </button>
+        </div>
+
+        <!-- Alert Notification Box -->
+        <div id="auth-alert" class="hidden mb-5 p-3.5 rounded-xl text-sm font-medium flex items-center space-x-2"></div>
+
+        <!-- LOGIN FORM -->
+        <form id="login-form" class="space-y-4">
+          <div>
+            <label class="block text-xs font-semibold uppercase tracking-wider text-gray-600 dark:text-gray-300 mb-1.5" for="login-email">
+              Email Address
+            </label>
+            <div class="relative">
+              <span class="absolute inset-y-0 left-0 flex items-center pl-3.5 text-gray-400">
+                📧
+              </span>
+              <input 
+                id="login-email" 
+                type="email" 
+                required 
+                placeholder="name@example.com" 
+                class="w-full pl-10 pr-4 py-3 rounded-xl border border-purple-200 dark:border-purple-800/80 bg-white/70 dark:bg-purple-950/40 text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent transition-all"
+              />
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-xs font-semibold uppercase tracking-wider text-gray-600 dark:text-gray-300 mb-1.5" for="login-password">
+              Password
+            </label>
+            <div class="relative">
+              <span class="absolute inset-y-0 left-0 flex items-center pl-3.5 text-gray-400">
+                🔒
+              </span>
+              <input 
+                id="login-password" 
+                type="password" 
+                required 
+                placeholder="••••••••" 
+                class="w-full pl-10 pr-4 py-3 rounded-xl border border-purple-200 dark:border-purple-800/80 bg-white/70 dark:bg-purple-950/40 text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent transition-all"
+              />
+            </div>
+          </div>
+
+          <button 
+            type="submit" 
+            id="login-submit-btn" 
+            class="w-full py-3.5 px-4 rounded-xl text-white font-semibold gradient-purple-btn shadow-lg flex items-center justify-center space-x-2 mt-2"
+          >
+            <span>Sign In to Dashboard</span>
+            <span>➔</span>
+          </button>
+        </form>
+
+        <!-- REGISTER FORM -->
+        <form id="register-form" class="space-y-4 hidden">
+          <div>
+            <label class="block text-xs font-semibold uppercase tracking-wider text-gray-600 dark:text-gray-300 mb-1.5" for="register-name">
+              Full Name
+            </label>
+            <div class="relative">
+              <span class="absolute inset-y-0 left-0 flex items-center pl-3.5 text-gray-400">
+                👤
+              </span>
+              <input 
+                id="register-name" 
+                type="text" 
+                required 
+                placeholder="John Doe" 
+                class="w-full pl-10 pr-4 py-3 rounded-xl border border-purple-200 dark:border-purple-800/80 bg-white/70 dark:bg-purple-950/40 text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent transition-all"
+              />
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-xs font-semibold uppercase tracking-wider text-gray-600 dark:text-gray-300 mb-1.5" for="register-email">
+              Email Address
+            </label>
+            <div class="relative">
+              <span class="absolute inset-y-0 left-0 flex items-center pl-3.5 text-gray-400">
+                📧
+              </span>
+              <input 
+                id="register-email" 
+                type="email" 
+                required 
+                placeholder="name@example.com" 
+                class="w-full pl-10 pr-4 py-3 rounded-xl border border-purple-200 dark:border-purple-800/80 bg-white/70 dark:bg-purple-950/40 text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent transition-all"
+              />
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-xs font-semibold uppercase tracking-wider text-gray-600 dark:text-gray-300 mb-1.5" for="register-password">
+              Password
+            </label>
+            <div class="relative">
+              <span class="absolute inset-y-0 left-0 flex items-center pl-3.5 text-gray-400">
+                🔒
+              </span>
+              <input 
+                id="register-password" 
+                type="password" 
+                required 
+                placeholder="At least 6 characters" 
+                class="w-full pl-10 pr-4 py-3 rounded-xl border border-purple-200 dark:border-purple-800/80 bg-white/70 dark:bg-purple-950/40 text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent transition-all"
+              />
+            </div>
+          </div>
+
+          <button 
+            type="submit" 
+            id="register-submit-btn" 
+            class="w-full py-3.5 px-4 rounded-xl text-white font-semibold gradient-purple-btn shadow-lg flex items-center justify-center space-x-2 mt-2"
+          >
+            <span>Create Account</span>
+            <span>➔</span>
+          </button>
+        </form>
+
+        <!-- Quick Demo Fill Helper -->
+        <div class="mt-6 pt-5 border-t border-purple-100 dark:border-purple-900/60 text-center">
+          <p class="text-xs text-gray-500 dark:text-gray-400 mb-2">
+            Testing for evaluation?
+          </p>
+          <button 
+            id="quick-demo-btn" 
+            type="button" 
+            class="text-xs font-semibold text-purple-600 dark:text-purple-400 hover:text-purple-700 dark:hover:text-purple-300 py-1.5 px-3 rounded-lg border border-purple-200 dark:border-purple-800 hover:bg-purple-50 dark:hover:bg-purple-900/30 transition-all inline-flex items-center space-x-1.5"
+          >
+            <span>⚡ Pre-fill Demo User (demo@parking.com)</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="py-4 text-center text-xs text-gray-400 dark:text-gray-600">
+    Smart Parking System &copy; 2026 • ESP8266 IoT + Express + Render
+  </footer>
+
+  <!-- Script logic for login/register and theme toggle -->
+  <script>
+    // Theme Management
+    const themeToggleBtn = document.getElementById('theme-toggle');
+    const themeIcon = document.getElementById('theme-icon');
+    const htmlElem = document.documentElement;
+
+    function applyTheme(theme) {
+      if (theme === 'dark') {
+        htmlElem.setAttribute('data-theme', 'dark');
+        themeIcon.textContent = '☀️';
+      } else {
+        htmlElem.setAttribute('data-theme', 'light');
+        themeIcon.textContent = '🌙';
+      }
+      localStorage.setItem('smart_parking_theme', theme);
+    }
+
+    const savedTheme = localStorage.getItem('smart_parking_theme') || 
+      (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    applyTheme(savedTheme);
+
+    themeToggleBtn.addEventListener('click', () => {
+      const current = htmlElem.getAttribute('data-theme');
+      applyTheme(current === 'dark' ? 'light' : 'dark');
+    });
+
+    // Check if user is already logged in
+    const existingToken = localStorage.getItem('smart_parking_token');
+    if (existingToken) {
+      // Optional: verify token or redirect
+      window.location.href = 'dashboard.html';
+    }
+
+    // Tab Navigation (Login vs Register)
+    const tabLoginBtn = document.getElementById('tab-login-btn');
+    const tabRegisterBtn = document.getElementById('tab-register-btn');
+    const loginForm = document.getElementById('login-form');
+    const registerForm = document.getElementById('register-form');
+    const formTitle = document.getElementById('form-title');
+    const formSubtitle = document.getElementById('form-subtitle');
+    const alertBox = document.getElementById('auth-alert');
+
+    function showAlert(msg, isSuccess = false) {
+      alertBox.className = `mb-5 p-3.5 rounded-xl text-sm font-medium flex items-center space-x-2 ${
+        isSuccess 
+          ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-950/60 dark:text-emerald-300 border border-emerald-300/50' 
+          : 'bg-rose-100 text-rose-800 dark:bg-rose-950/60 dark:text-rose-300 border border-rose-300/50'
+      }`;
+      alertBox.innerHTML = `<span>${isSuccess ? '✅' : '⚠️'}</span><span>${msg}</span>`;
+      alertBox.classList.remove('hidden');
+    }
+
+    function hideAlert() {
+      alertBox.classList.add('hidden');
+    }
+
+    tabLoginBtn.addEventListener('click', () => {
+      tabLoginBtn.className = 'flex-1 py-2.5 text-sm font-semibold rounded-xl transition-all shadow-sm bg-white dark:bg-purple-800 text-purple-700 dark:text-white';
+      tabRegisterBtn.className = 'flex-1 py-2.5 text-sm font-medium rounded-xl transition-all text-gray-600 dark:text-gray-300 hover:text-purple-700 dark:hover:text-white';
+      loginForm.classList.remove('hidden');
+      registerForm.classList.add('hidden');
+      formTitle.textContent = 'Welcome Back';
+      formSubtitle.textContent = 'Sign in to access real-time IoT smart parking slots';
+      hideAlert();
+    });
+
+    tabRegisterBtn.addEventListener('click', () => {
+      tabRegisterBtn.className = 'flex-1 py-2.5 text-sm font-semibold rounded-xl transition-all shadow-sm bg-white dark:bg-purple-800 text-purple-700 dark:text-white';
+      tabLoginBtn.className = 'flex-1 py-2.5 text-sm font-medium rounded-xl transition-all text-gray-600 dark:text-gray-300 hover:text-purple-700 dark:hover:text-white';
+      registerForm.classList.remove('hidden');
+      loginForm.classList.add('hidden');
+      formTitle.textContent = 'Create Account';
+      formSubtitle.textContent = 'Register to reserve smart parking bays instantly';
+      hideAlert();
+    });
+
+    // Quick demo button
+    document.getElementById('quick-demo-btn').addEventListener('click', () => {
+      document.getElementById('login-email').value = 'demo@parking.com';
+      document.getElementById('login-password').value = 'password123';
+      if (loginForm.classList.contains('hidden')) {
+        tabLoginBtn.click();
+      }
+    });
+
+    // Handle Login Submit
+    loginForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      hideAlert();
+      const email = document.getElementById('login-email').value;
+      const password = document.getElementById('login-password').value;
+      const submitBtn = document.getElementById('login-submit-btn');
+
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = `<span>Signing in...</span>`;
+
+      try {
+        const response = await fetch('/api/auth/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, password })
+        });
+        const data = await response.json();
+
+        if (response.ok && data.success) {
+          showAlert('Login successful! Redirecting...', true);
+          localStorage.setItem('smart_parking_token', data.token);
+          localStorage.setItem('smart_parking_user', JSON.stringify(data.user));
+          setTimeout(() => {
+            window.location.href = 'dashboard.html';
+          }, 600);
+        } else {
+          showAlert(data.message || 'Invalid email or password');
+        }
+      } catch (err) {
+        showAlert('Unable to reach server. Please check your network connection.');
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = `<span>Sign In to Dashboard</span><span>➔</span>`;
+      }
+    });
+
+    // Handle Register Submit
+    registerForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      hideAlert();
+      const name = document.getElementById('register-name').value;
+      const email = document.getElementById('register-email').value;
+      const password = document.getElementById('register-password').value;
+      const submitBtn = document.getElementById('register-submit-btn');
+
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = `<span>Creating account...</span>`;
+
+      try {
+        const response = await fetch('/api/auth/register', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ name, email, password })
+        });
+        const data = await response.json();
+
+        if (response.ok && data.success) {
+          showAlert('Account created! Redirecting...', true);
+          localStorage.setItem('smart_parking_token', data.token);
+          localStorage.setItem('smart_parking_user', JSON.stringify(data.user));
+          setTimeout(() => {
+            window.location.href = 'dashboard.html';
+          }, 600);
+        } else {
+          showAlert(data.message || 'Failed to create account');
+        }
+      } catch (err) {
+        showAlert('Unable to reach server. Please check your network connection.');
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = `<span>Create Account</span><span>➔</span>`;
+      }
+    });
+  </script>
+</body>
+</html>
